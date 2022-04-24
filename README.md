@@ -11,31 +11,48 @@ Add a package to your private repository and add the repository to `composer.jso
     "minimum-stability": "dev",
     "repositories": [
         {
-          "type": "vcs",
-          "url": "<your URL to private repository>"
+            "type": "package",
+            "package": {
+                "name": "clmntb/payplug-sylius",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/clmntb/payplug-sylius.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "PayPlug\\SyliusPayPlugPlugin\\": "vendor/clmntb/payplug-sylius/src/"
+        }
+    }
 }
 ```
 
 1. Require plugin with composer:
 
     ```bash
-    composer require payplug/payplug-sylius
+    composer require clmntb/payplug-sylius
     ```
 
-2. Import configuration in your `config/packages/_sylius.yaml` file:
+2. Import configuration in your `app/config/config.yml` file:
 
     ```yaml
     imports:
         - { resource: "@PayPlugSyliusPayPlugPlugin/Resources/config/config.yml" }
     ```
 
-3. Add plugin class to your `config/bundles.php` file:
+3. Add plugin class to your `app/AppKernel.php` file:
 
     ```php
     $bundles = [
-        PayPlug\SyliusPayPlugPlugin\PayPlugSyliusPayPlugPlugin::class => ['all' => true],
+        ...
+
+        new PayPlug\SyliusPayPlugPlugin\PayPlugSyliusPayPlugPlugin(),
+    
+        ...
     ];
     ```
 
