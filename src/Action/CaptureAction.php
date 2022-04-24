@@ -86,7 +86,7 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Gateway
             'cancel_url' => $token->getTargetUrl() . '?&' . http_build_query(['status' => PayPlugApiClientInterface::STATUS_CANCELED]),
         ];
 
-        if (isset($_ENV['APP_ENV']) && 'dev' === $_ENV['APP_ENV'] && !empty($this->payPlugApiClient->getNotificationUrlDev())) {
+        if (!empty($this->payPlugApiClient->getNotificationUrlDev())) {
             $notificationUrl = sprintf(
                 '%s%s',
                 rtrim($this->payPlugApiClient->getNotificationUrlDev(),"/"),
@@ -95,7 +95,6 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Gateway
         }
 
         $details['notification_url'] = $notificationUrl;
-
         $payment = $this->payPlugApiClient->createPayment($details->getArrayCopy());
 
         $details['payment_id'] = $payment->id;

@@ -1,11 +1,6 @@
 winzou_state_machine:
     sylius_payment:
         callbacks:
-            after:
-                app_check_payplug_payment:
-                    on: ["process"]
-                    do: ["@payplug_sylius_payplug_plugin.resolver.payment_state", "resolve"]
-                    args: ["object"]
             before:
                 payplug_sylius_payplug_plugin_refund_process:
                     on: ["refund"]
