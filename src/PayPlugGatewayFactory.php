@@ -24,6 +24,7 @@ final class PayPlugGatewayFactory extends GatewayFactory
             $config['payum.default_options'] = [
                 'secretKey' => null,
                 'notificationUrlDev' => null,
+                'oneyPaymentx3' => false,
             ];
 
             $config->defaults($config['payum.default_options']);
@@ -38,7 +39,11 @@ final class PayPlugGatewayFactory extends GatewayFactory
                 /** @var PayPlugApiClientInterface $payPlugApiClient */
                 $payPlugApiClient = $config['payum.http_client'];
 
-                $payPlugApiClient->initialise($config['secretKey'], $config['notificationUrlDev']);
+                $payPlugApiClient->initialise(
+                    $config['secretKey'], 
+                    $config['notificationUrlDev'], 
+                    $config['oneyPayment'], 
+                    $config['oneyFees']);
 
                 return $payPlugApiClient;
             };

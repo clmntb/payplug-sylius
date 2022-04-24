@@ -6,6 +6,7 @@ namespace PayPlug\SyliusPayPlugPlugin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -27,6 +28,26 @@ final class PayPlugGatewayConfigurationType extends AbstractType
             ])
             ->add('notificationUrlDev', TextType::class, [
                 'label' => 'payplug_sylius_payplug_plugin.ui.notification_url_for_env_dev',
+                'required' => false,
+            ])
+            ->add('oneyPayment', CheckBoxType::class, [
+                'label' => 'payplug_sylius_payplug_plugin.ui.oney_payment',
+                'required' => false,
+            ])
+            ->add('oneyFees', CheckBoxType::class, [
+                'label' => 'payplug_sylius_payplug_plugin.ui.oney_with_fees',
+                'required' => false,
+            ])
+            ->add('oneyBrand', TextType::class, [
+                'label' => 'payplug_sylius_payplug_plugin.ui.oney_brand',
+                'required' => false,
+            ])
+            ->add('oneyShippingLabel', TextType::class, [
+                'label' => 'payplug_sylius_payplug_plugin.ui.oney_shipping_label',
+                'required' => false,
+            ])
+            ->add('oneyDateModifier', TextType::class, [
+                'label' => 'payplug_sylius_payplug_plugin.ui.oney_date_modifier',
                 'required' => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {

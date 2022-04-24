@@ -51,7 +51,11 @@ final class PaymentStateResolver implements PaymentStateResolverInterface
 
         $gatewayConfig = $paymentMethod->getGatewayConfig()->getConfig();
 
-        $this->payPlugApiClient->initialise($gatewayConfig['secretKey']);
+        $this->payPlugApiClient->initialise(
+            $gatewayConfig['secretKey'], 
+            $gatewayConfig['notificationUrlDev'],
+            $gatewayConfig['oneyPayment'],
+            $gatewayConfig['oneyFees']);
 
         $paymentStateMachine = $this->stateMachineFactory->get($payment, PaymentTransitions::GRAPH);
 
