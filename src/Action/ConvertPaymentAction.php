@@ -28,21 +28,36 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
         $order = $payment->getOrder();
 
         $customer = $order->getCustomer();
-        $address = $order->getBillingAddress();
+        $billingAddress = $order->getBillingAddress();
+        $shippingddress = $order->getShippingAddress();
 
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
 
         $details['amount'] = $payment->getAmount();
         $details['currency'] = $payment->getCurrencyCode();
-        $details['customer'] = [
-            'email' => $customer->getEmail(),
-            'first_name' => $address->getFirstName(),
-            'last_name' => $address->getLastName(),
-            'address1' => $address->getStreet(),
-            'city' => $address->getCity(),
-            'country' => $address->getCountryCode(),
-            'postcode' => $address->getPostcode(),
-        ];
+        $details['billing'] = array(
+            'title'        => null,
+            'first_name'   => $billingAddress->getFirstName(),
+            'last_name'    => $billingAddress->getLastName(),
+            'email'        => $customer->getEmail(),
+            'address1'     => $billingAddress->getStreet(),
+            'postcode'     => $billingAddress->getPostCode(),
+            'city'         => $billingAddress->getCity(),
+            'country'      => $billingAddress->getCountryCode(),
+            'language'     => 'fr'
+        );
+        $details['shipping'] = array(
+            'title'        => null,
+            'first_name'   => $shippingddress->getFirstName(),
+            'last_name'    => $shippingddress->getLastName(),
+            'email'        => $customer->getEmail(),
+            'address1'     => $shippingddress->getStreet(),
+            'postcode'     => $shippingddress->getPostCode(),
+            'city'         => $shippingddress->getCity(),
+            'country'      => $shippingddress->getCountryCode(),
+            'language'     => 'fr',
+            "delivery_type" => "BILLING"
+        );
         $details['metadata'] = [
             'customer_id' => $customer->getId(),
             'order_number' => $order->getNumber(),
