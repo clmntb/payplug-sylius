@@ -34,7 +34,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
 
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
 
-        if ($gatewayConfig['oneyPayment']) {
+        if (isset($gatewayConfig['oneyPayment']) and $gatewayConfig['oneyPayment']) {
             $details['authorized_amount'] = $payment->getAmount();
             $details['auto_capture'] = true;
             if ($gatewayConfig['oneyFees']) {
@@ -76,7 +76,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
             'customer_id' => $customer->getId(),
             'order_number' => $order->getNumber(),
         ];
-        if ($gatewayConfig['oneyPayment']) {
+        if (isset($gatewayConfig['oneyPayment']) and $gatewayConfig['oneyPayment']) {
             $cart = array();
 
             foreach ($order->getItems() as $order_item) {
@@ -113,6 +113,8 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
     }
 
     private function canonicalizePhoneNumber($number) {
+	if ($number === null)
+	    return $number;
         if (preg_match("/\+33.*/", $number)) {
             return $number;
         } else {
